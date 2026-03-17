@@ -17,11 +17,11 @@ export function Contact() {
       },
       {
         name: 'GitHub',
-        url: 'https://github.com/Baro1502',
+        url: 'https://github.com/baotran152',
       },
       {
         name: 'CV',
-        url: 'resume.pdf',
+        url: 'CV -- Trần Nguyễn Duy Bảo - AI Engineer.pdf',
       },
     ],
   };
