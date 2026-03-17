@@ -7,30 +7,45 @@ import Image from 'next/image';
 const timelineData = [
   {
     role: 'AI Engineer',
-    organization: 'MCV Group',
-    duration: '2023 - Present',
+    organization: 'Trivita AI',
+    duration: 'Oct. 2025 - Present',
     location: 'Ho Chi Minh City, Vietnam',
-    logo: '/mcvgroup.jpeg',
+    logo: '/mcvgroup.jpeg', // will update placeholder later
     description:
-      'As an AI Engineer, I design and deploy intelligent systems handling unstructured and multimodal data to support real-world applications in healthcare and automation.',
+      'Optimized MoE LLM inference throughput on H100 clusters and built robust LLM-as-a-Judge evaluation systems for medical dialogues.',
     highlights: [
-      'Developed and fine-tuned chatbot agents using LLMs and LangChain.',
-      'Built multimedia summarization pipelines from images, PDFs, and text.',
-      'Object anomaly detection with complex computer vision techniques',
-      'Created an ML pipeline for diabetes risk prediction using health data.',
-      'Engineered data extraction workflows with OCR and custom logic.',
-      'Processed complex tabular datasets with feature engineering and normalization.',
+      'Optimized inference throughput for MoE LLMs up to 397B parameters on H100 clusters via tensor/expert parallelism with vLLM.',
+      'Built a two-tier LLM-as-a-Judge evaluation system combining heuristic pre-filtering with Prometheus evaluators.',
+      'Fine-tuned PhoBERT for Vietnamese ICD-10 code classification with augmentation and resampling.',
+      'Designed a Dagster orchestration pipeline for MedVita automating generation and evaluation of synthetic medical conversations.',
     ],
   },
   {
-    role: 'Bachelor of Technology in Computer Science Engineering',
+    role: 'AI Engineer',
+    organization: 'MCV Complex',
+    duration: 'Jul. 2023 - Oct. 2025',
+    location: 'Ho Chi Minh City, Vietnam',
+    logo: '/mcvgroup.jpeg',
+    description:
+      'Shipped 4 production AI systems across healthcare and media verticals, owning full-stack delivery from model selection through deployment on GCP and AWS.',
+    highlights: [
+      'Introduced a modular inference engine toggling between local open-source models (vLLM, Ollama) and cloud APIs.',
+      'Designed SpaceOne, a real-time media summarization and sentiment analysis pipeline deployed on Kafka.',
+      'Built Doctor Assistant, a LangGraph-powered conversational agent enabling multi-turn clinical dialogue across text, PDF, speech, and image.',
+      'Fine-tuned YOLOv8 for spoof detection in FaceID system, achieving 92% accuracy with sub-1s latency.',
+    ],
+  },
+  {
+    role: 'B.Sc. in Computer Science',
     organization: 'Ton Duc Thang University',
-    duration: '2021 - 2025',
+    duration: '2021 - Jun. 2025',
     location: 'Ho Chi Minh City, Vietnam',
     logo: '/tdtu.png',
     description:
-      'Pursuing a B.Tech degree in Computer Science with a specialization in Artificial Intelligence. This is where I began exploring the fields of AI, ML, and Data Science deeply.',
-    highlights: [],
+      'Graduated with a GPA of 8.1 / 10.0. Top 10 in Recursion Hackathon 2022. C1 English Proficiency.',
+    highlights: [
+      'Capstone: Fine-tuned YOLOv8 on NIH ChestX-ray14 with CLAHE and elastic distortion augmentation for radiology abnormality detection.',
+    ],
   },
 ];
 

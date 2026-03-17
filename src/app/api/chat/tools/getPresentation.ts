@@ -8,7 +8,7 @@ export const getPresentation = tool({
   execute: async () => {
     return {
       presentation:
-        "I'm Trần Nguyễn Duy Bảo, an AI Engineer passionate about building intelligent systems using LLMs, Computer Vision, and Big Data. I’ve led projects ranging from medical AI chatbots and multimodal summarization platforms to traffic-aware navigation systems. I focus on applying state-of-the-art AI to solve real-world problems with impact.",
+        "I'm Trần Nguyễn Duy Bảo, starting as an AI Engineer since 2023, with years of production experience in building and optimizing LLM systems, NLP pipelines, and multimodal AI applications. I specialize in LLM inference optimization, multi-agent orchestration, and RAG architectures using tools like vLLM, LangChain, and Dagster. I focus on solving real-world problems in healthcare and media.",
     };
   },
 });

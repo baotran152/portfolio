@@ -10,9 +10,9 @@ export function Presentation() {
     name: 'Trần Nguyễn Duy Bảo',
     age: '22 years old',
     location: 'Ho Chi Minh City, Vietnam',
-    description: `I'm Trần Nguyễn Duy Bảo, an AI Engineer with strong experience in building intelligent systems using LLMs, NLP, and computer vision.
+    description: `I'm Trần Nguyễn Duy Bảo, starting as an AI Engineer since 2023, with years of production experience in building and optimizing LLM systems, NLP pipelines, and multimodal AI applications.
 
-I specialize in building AI-powered applications with technologies like LangChain, Pinecone, OpenAI, Kafka, and PyTorch. I’m passionate about solving real-world problems with machine learning and exploring the latest in model deployment, agent architecture, and multimodal pipelines.`,
+I specialize in LLM inference optimization, multi-agent orchestration, and RAG architectures using tools like vLLM, LangChain, and Dagster. I’m passionate about solving real-world problems in healthcare and media, combining rigorous MLOps practices with clean software engineering to ship enterprise-grade AI systems.`,
     src: '/me.jpg', // Replace with your actual image path
     fallbackSrc:
       'https://images.unsplash.com/photo-1582725461742-8ecd962c260d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',

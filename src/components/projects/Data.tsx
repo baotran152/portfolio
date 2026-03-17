@@ -9,10 +9,10 @@ const PROJECT_CONTENT = [
   {
     title: 'Doctor Assistant',
     description:
-      `An AI-powered healthcare assistant designed for intelligent, multimodal interactions using state-of-the-art LLMs and vector search.\n\n- Built with LangChain Agent for dynamic, multi-turn conversations\n- Integrated Pinecone for semantic search over medical documents\n- Enabled PDF/image (e.g., X-rays) analysis via OCR and embedding\n- Combined OpenAI/GCP/Azure APIs to provide contextual answers\n- Used RAG to provide document-grounded medical assistance`,
+      `A LangGraph-powered conversational agent with memory and tool use, enabling multi-turn clinical dialogue across text, PDF, speech, and image inputs.\n\n- Built with LangGraph for dynamic, multi-turn conversations\n- Embedded structured medical literature into Pinecone vector DB for RAG-powered responses\n- Enabled multi-modal input processing (text, PDF, Whisper speech, PIL images)\n- Designed JSON-constrained prompt templates to enforce structured LLM output\n- Combined cloud APIs and local LLMs (vLLM, Ollama) to optimize inference`,
     techStack: [
       'Python', 'LLM', 'OpenAI', 'Azure', 'GCP', 'OCR', 'RAG', 'Vector DB',
-      'Pinecone', 'Langchain', 'vLLM', 'Ollama', 'PyPDF'
+      'Pinecone', 'LangGraph', 'vLLM', 'Ollama', 'Whisper'
     ],
     date: '2024 - 2025',
     links: [
@@ -29,9 +29,9 @@ const PROJECT_CONTENT = [
   {
     title: 'Spaceone',
     description:
-      `A multimodal big data platform that summarizes video content and analyzes social sentiment using LLMs and Kafka.\n\n- Extracted audio from video via Spleeter, transcribed to text\n- Summarized using OpenAI LLM with structured prompts\n- Fine-tuned PhoBERT for Vietnamese sentiment classification\n- Scaled processing with Kafka, deployed on GCP and AWS`,
-    techStack: ['Python', 'Kafka', 'OpenAI', 'GCP', 'AWS', 'NodeJs', 'Transformer'],
-    date: '2024',
+      `A real-time media summarization and sentiment analysis platform scaling via Kafka.\n\n- Designed pipeline: isolated vocals with Spleeter, transcribed with Whisper\n- Summarized via structured GPT-4 prompts over LangChain\n- Fine-tuned PhoBERT for Vietnamese 3-class sentiment classification (84% F1)\n- Integrated into Kafka streaming architecture, deployed on GCP/AWS`,
+    techStack: ['Python', 'Kafka', 'OpenAI', 'GCP', 'AWS', 'LangChain', 'PhoBERT', 'Whisper', 'Spleeter'],
+    date: '2023 - 2025',
     links: [
       { name: 'Homepage', url: 'https://spaceone.vn/' },
     ],
@@ -43,8 +43,8 @@ const PROJECT_CONTENT = [
   {
     title: 'Diabetes Prediction',
     description:
-      `A regression-based ML pipeline to predict blood sugar levels from health questionnaire responses and basic diagnostics.\n\n- Cleaned/normalized tabular data (198+ mismatches, missing G2)\n- Applied log transformation on skewed target distribution\n- Balanced dataset using ADASYN oversampling\n- Trained multiple regressors; SVR yielded best R² (≈0.8)\n- Pipeline supports early-stage, non-invasive diabetes screening`,
-    techStack: ['Python', 'Pandas', 'XGBoost', 'Scikit-learn'],
+      `A regression-based ML pipeline to predict blood sugar levels from health questionnaire responses and basic diagnostics.\n\n- Trained 10+ regression models on OCR-parsed survey data\n- Applied log-transformed glucose targets and RobustScaler normalization\n- Balanced dataset using ADASYN oversampling\n- SVR achieved R² > 0.85 with ~5% mean prediction error\n- Pipeline supports early-stage, non-invasive diabetes screening`,
+    techStack: ['Python', 'Pandas', 'XGBoost', 'Scikit-learn', 'SVR'],
     date: '2024',
     links: [],
     images: [
@@ -72,8 +72,8 @@ const PROJECT_CONTENT = [
   {
     title: 'Spooface',
     description:
-      `A Face ID system resistant to presentation attacks via image-based spoof detection using custom-trained YOLOv8.\n\n- Labeled a spoofing dataset to fine-tune YOLOv8 model\n- Integrated OpenCV, DeepFace, and face_recognition for identity matching\n- Real-time spoof detection pipeline filters out printed/onscreen images\n- Modular design for kiosk or edge deployment`,
-    techStack: ['Python', 'YOLOv8', 'OpenCV', 'DeepFace', 'face_recognition', 'Pandas'],
+      `A Face ID system resistant to presentation attacks via image-based spoof detection using custom-trained YOLOv8.\n\n- Fine-tuned YOLOv8 to classify real vs. spoofed inputs (printed, screens, masks) on custom dataset\n- Integrated OpenCV and DeepFace for post-liveness identity verification\n- Achieved 92% spoof detection accuracy with sub-1s latency\n- Reduced unauthorized check-ins by over 85% in live event conditions`,
+    techStack: ['Python', 'YOLOv8', 'OpenCV', 'DeepFace', 'Pandas'],
     date: '2024',
     links: [],
     images: [
@@ -92,6 +92,15 @@ const PROJECT_CONTENT = [
       { src: '/projects/traffix/detection-batch1.jpg', alt: 'Vehicle detection' },
       { src: '/projects/traffix/default-inapp.jpg', alt: 'App screenshot' },
     ],
+  },
+  {
+    title: 'MedVita',
+    description:
+      `A synthetic medical conversation generation pipeline automating end-to-end generation and evaluation of synthetic doctor-patient conversations.\n\n- Designed a Dagster orchestration pipeline with a 4-stage clean architecture: preprocessing, inference, postprocessing, evaluation\n- Architected multi-agent systems with LangChain and Camel-AI\n- Simulates realistic clinical dialogues across 10+ specialized medical departments\n- Generates dynamic patient personas and synthesizes clinical scenarios`,
+    techStack: ['Python', 'Dagster', 'LangChain', 'Camel-AI', 'LLM Agents'],
+    date: '2025 - Present',
+    links: [],
+    images: [],
   },
 ];
 
@@ -212,6 +221,12 @@ export const data = [
     title: 'Doctor Assistant',
     src: '/projects/doctor-assistant/logo.webp',
     content: <ProjectContent project={{ title: 'Doctor Assistant' }} />,
+  },
+  {
+    category: 'Healthcare AI',
+    title: 'MedVita',
+    src: '/projects/doctor-assistant/logo.webp',
+    content: <ProjectContent project={{ title: 'MedVita' }} />,
   },
   {
     category: 'Big Data & Multimodal',
