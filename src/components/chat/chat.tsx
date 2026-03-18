@@ -167,7 +167,7 @@ const Chat = () => {
     },
     onToolCall: (tool) => {
       const toolName = tool.toolCall.toolName;
-      console.log('Tool call:', toolName);
+      // console.log('Tool call:', toolName);
     },
   });
 

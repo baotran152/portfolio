@@ -10,7 +10,7 @@ const timelineData = [
     organization: 'Trivita AI',
     duration: 'Oct. 2025 - Present',
     location: 'Ho Chi Minh City, Vietnam',
-    logo: '/mcvgroup.jpeg', // will update placeholder later
+    logo: '/trivitaai.jpg',
     description:
       'Optimized MoE LLM inference throughput on H100 clusters and built robust LLM-as-a-Judge evaluation systems for medical dialogues.',
     highlights: [

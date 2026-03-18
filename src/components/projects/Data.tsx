@@ -225,7 +225,7 @@ export const data = [
   {
     category: 'Healthcare AI',
     title: 'MedVita',
-    src: '/projects/doctor-assistant/logo.webp',
+    src: '/projects/medvita/logo.webp',
     content: <ProjectContent project={{ title: 'MedVita' }} />,
   },
   {

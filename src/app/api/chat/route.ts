@@ -1,4 +1,9 @@
-import { google } from "@ai-sdk/google"
+import { createOpenAI } from "@ai-sdk/openai";
+
+const openrouter = createOpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
 import { streamText } from 'ai';
 import { SYSTEM_PROMPT } from './prompt';
 import { getContact } from './tools/getContact';
@@ -26,7 +31,7 @@ function errorHandler(error: unknown) {
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
-    console.log('[CHAT-API] Incoming messages:', messages);
+    // console.log('[CHAT-API] Incoming messages:', messages);
 
     messages.unshift(SYSTEM_PROMPT);
 
@@ -40,7 +45,7 @@ export async function POST(req: Request) {
     };
 
     const result = streamText({
-      model: google("models/gemini-2.5-flash"),
+      model: openrouter("openrouter/free"),
       messages,
       toolCallStreaming: true,
       tools,
