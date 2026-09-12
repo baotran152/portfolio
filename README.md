@@ -56,7 +56,7 @@ Want to run this project locally? Here's what you need:
    ```
 
    `AI_MODEL` optionally overrides the model. The defaults are `gemini-2.5-flash`
-   for google, `gpt-4o-mini` for openai and `openai/gpt-4o-mini` for openrouter.
+   for google, `gpt-4o-mini` for openai and `openrouter/free` for openrouter.
 4. **Run the development server**
 
    ```bash

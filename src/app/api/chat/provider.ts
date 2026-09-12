@@ -13,7 +13,7 @@ const PROVIDER_ENV_KEYS: Record<ProviderKey, string> = {
 const DEFAULT_MODELS: Record<ProviderKey, string> = {
   google: 'gemini-2.5-flash',
   openai: 'gpt-4o-mini',
-  openrouter: 'openai/gpt-4o-mini',
+  openrouter: 'openrouter/free',
 };
 
 const BUILDERS: Record<
