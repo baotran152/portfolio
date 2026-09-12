@@ -1,6 +1,6 @@
 import { streamText } from 'ai';
 import { createChatModel } from './provider';
-import { SYSTEM_PROMPT } from './prompt';
+import { getSystemPrompt } from './prompt';
 import { getContact } from './tools/getContact';
 import { getPresentation } from './tools/getPresentation';
 import { getProjects } from './tools/getProjects';
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
     // console.log('[CHAT-API] Incoming messages:', messages);
 
-    messages.unshift(SYSTEM_PROMPT);
+    messages.unshift(getSystemPrompt());
 
     const tools = {
       getProjects,

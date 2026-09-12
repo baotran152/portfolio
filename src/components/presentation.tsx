@@ -4,15 +4,20 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React from 'react';
 
+const BIRTH_YEAR = 2003;
+
 export function Presentation() {
+  // Derived so the number never goes stale; recomputed on each render.
+  const age = new Date().getFullYear() - BIRTH_YEAR;
+
   // Personal information
   const profile = {
     name: 'Trần Nguyễn Duy Bảo',
-    age: '22 years old',
+    age: `${age} years old`,
     location: 'Ho Chi Minh City, Vietnam',
     description: `I'm Trần Nguyễn Duy Bảo, starting as an AI Engineer since 2023, with years of production experience in building and optimizing LLM systems, NLP pipelines, and multimodal AI applications.
 
-I specialize in LLM inference optimization, multi-agent orchestration, and RAG architectures using tools like vLLM, LangChain, and Dagster. I’m passionate about solving real-world problems in healthcare and media, combining rigorous MLOps practices with clean software engineering to ship enterprise-grade AI systems.`,
+I specialize in LLM inference optimization, multi-agent orchestration, and RAG architectures using tools like vLLM, LangChain, and Dagster. I’m passionate about solving real-world problems in healthcare, finance, security and media, combining rigorous MLOps practices with clean software engineering to ship enterprise-grade AI systems.`,
     src: '/me.jpg', // Replace with your actual image path
     fallbackSrc:
       'https://images.unsplash.com/photo-1582725461742-8ecd962c260d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -106,8 +111,6 @@ I specialize in LLM inference optimization, multi-agent orchestration, and RAG a
               'NLP',
               'Computer Vision',
               'Vietnam',
-              'LangChain',
-              'Pinecone',
             ].map((tag) => (
               <span
                 key={tag}

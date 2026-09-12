@@ -31,7 +31,7 @@ Want to run this project locally? Here's what you need:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/Baro1502/portfolio.git
+   git clone https://github.com/baotran152/portfolio.git
    cd portfolio
    ```
 2. **Install dependencies**
@@ -58,10 +58,10 @@ Want to run this project locally? Here's what you need:
    `AI_MODEL` optionally overrides the model. The defaults are `gemini-2.5-flash`
    for google, `gpt-4o-mini` for openai and `openrouter/free` for openrouter.
 
-   `NEXT_PUBLIC_OPEN_TO_WORK` controls the availability banner on the homepage:
-   `true` shows "I am OPEN for new opportunity", `false` shows "Currently NOT open".
-   Being a `NEXT_PUBLIC_` variable it is inlined at build time, so changing it needs
-   a rebuild or redeploy - but no code change.
+   `OPEN_TO_WORK` controls the availability banner on the homepage: `true` shows
+   "I am OPEN for new opportunity", `false` shows "Currently NOT open". It is read
+   on the server per request, so it never reaches the browser and changing it needs
+   no code change.
 4. **Run the development server**
 
    ```bash

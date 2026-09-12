@@ -1,6 +1,6 @@
 'use client';
 import { useChat } from '@ai-sdk/react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -9,12 +9,12 @@ import { toast } from 'sonner';
 // Component imports
 import ChatBottombar from '@/components/chat/chat-bottombar';
 import ChatLanding from '@/components/chat/chat-landing';
-import ChatMessageContent from '@/components/chat/chat-message-content';
-import { SimplifiedChatView } from '@/components/chat/simple-chat-view';
+import ChatMessageRow from '@/components/chat/chat-message-row';
 import {
   ChatBubble,
   ChatBubbleMessage,
 } from '@/components/ui/chat/chat-bubble';
+import { ThemeToggle } from '@/components/theme-toggle';
 import WelcomeModal from '@/components/welcome-modal';
 import { Info } from 'lucide-react';
 import { GithubButton } from '../ui/github-button';
@@ -129,13 +129,9 @@ const Chat = () => {
     messages,
     input,
     handleInputChange,
-    handleSubmit,
     isLoading,
     stop,
-    setMessages,
     setInput,
-    reload,
-    addToolResult,
     append,
   } = useChat({
     onResponse: (response) => {
@@ -274,6 +270,33 @@ const Chat = () => {
   // Calculate header height based on hasActiveTool
   const headerHeight = hasActiveTool ? 100 : 180;
 
+  // Only pull the view down when the user is already at the bottom, so scrolling
+  // up to read history is not yanked back by the next streamed token.
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const isAtBottomRef = useRef(true);
+
+  useEffect(() => {
+    const sentinel = bottomRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isAtBottomRef.current = entry.isIntersecting;
+      },
+      { root: sentinel.closest('.overflow-y-auto'), rootMargin: '0px 0px 120px 0px' }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [isEmptyState]);
+
+  useEffect(() => {
+    if (isAtBottomRef.current) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [messages]);
+
+
+
   return (
     <div className="relative h-screen overflow-hidden">
       <div className="absolute top-6 right-8 z-51 flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
@@ -284,22 +307,25 @@ const Chat = () => {
             </div>
           }
         />
+        <ThemeToggle />
         <div className="">
           <GithubButton
             animationDuration={1.5}
             label="Star"
             size={'sm'}
-            repoUrl="https://github.com/Baro1502/"
+            repoUrl="https://github.com/baotran152/"
           />
         </div>
       </div>
 
       {/* Fixed Avatar Header with Gradient */}
+      {/* The gradient is driven by a token so it follows the theme; a hardcoded
+          white here left the whole header light in dark mode. */}
       <div
         className="fixed top-0 right-0 left-0 z-50"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%)',
+            'linear-gradient(to bottom, var(--background) 0%, color-mix(in oklab, var(--background) 95%, transparent) 30%, color-mix(in oklab, var(--background) 80%, transparent) 50%, transparent 100%)',
         }}
       >
         <div
@@ -315,71 +341,51 @@ const Chat = () => {
             </ClientOnly>
           </div>
 
-          <AnimatePresence>
-            {latestUserMessage && !currentAIMessage && (
-              <motion.div
-                {...MOTION_CONFIG}
-                className="mx-auto flex max-w-3xl px-4"
-              >
-                <ChatBubble variant="sent">
-                  <ChatBubbleMessage>
-                    <ChatMessageContent
-                      message={latestUserMessage}
-                      isLast={true}
-                      isLoading={false}
-                      reload={() => Promise.resolve(null)}
-                    />
-                  </ChatBubbleMessage>
-                </ChatBubble>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
 
       {/* Main Content Area */}
       <div className="container mx-auto flex h-full max-w-3xl flex-col">
         {/* Scrollable Chat Content */}
+        {/* The header animates its own height over 300ms when a tool result lands,
+            so this padding has to ease over the same duration or the content jumps. */}
         <div
-          className="flex-1 overflow-y-auto px-2"
+          className="flex-1 overflow-y-auto px-2 transition-[padding-top] duration-300 ease-in-out"
           style={{ paddingTop: `${headerHeight}px` }}
         >
-          <AnimatePresence mode="wait">
-            {isEmptyState ? (
-              <motion.div
-                key="landing"
-                className="flex min-h-full items-center justify-center"
-                {...MOTION_CONFIG}
-              >
-                <ChatLanding submitQuery={submitQuery} />
-              </motion.div>
-            ) : currentAIMessage ? (
-              <div className="pb-4">
-                <SimplifiedChatView
-                  message={currentAIMessage}
+          {isEmptyState ? (
+            <motion.div
+              key="landing"
+              className="flex min-h-full items-center justify-center"
+              {...MOTION_CONFIG}
+            >
+              <ChatLanding submitQuery={submitQuery} />
+            </motion.div>
+          ) : (
+            <div className="px-2 pb-4">
+              {messages.map((message, index) => (
+                <ChatMessageRow
+                  key={message.id}
+                  message={message}
+                  isLatest={index === messages.length - 1}
                   isLoading={isLoading}
-                  reload={reload}
-                  addToolResult={addToolResult}
                 />
-              </div>
-            ) : (
-              loadingSubmit && (
-                <motion.div
-                  key="loading"
-                  {...MOTION_CONFIG}
-                  className="px-4 pt-18"
-                >
-                  <ChatBubble variant="received">
-                    <ChatBubbleMessage isLoading />
-                  </ChatBubble>
-                </motion.div>
-              )
-            )}
-          </AnimatePresence>
+              ))}
+
+              {loadingSubmit && (
+                <ChatBubble variant="received">
+                  <ChatBubbleMessage isLoading />
+                </ChatBubble>
+              )}
+
+              {/* Watched to decide whether new messages should pull the view down. */}
+              <div ref={bottomRef} className="h-px" />
+            </div>
+          )}
         </div>
 
         {/* Fixed Bottom Bar */}
-        <div className="sticky bottom-0 bg-white px-2 pt-3 md:px-0 md:pb-4">
+        <div className="bg-background sticky bottom-0 px-2 pt-3 md:px-0 md:pb-4">
           <div className="relative flex flex-col items-center gap-3">
             <HelperBoost submitQuery={submitQuery} setInput={setInput} />
             <ChatBottombar
@@ -393,7 +399,7 @@ const Chat = () => {
           </div>
         </div>
         {/* <a
-          href="https://x.com/toukoumcode"
+          href="https://x.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed right-3 bottom-0 z-10 mb-4 hidden cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-sm hover:underline md:block"

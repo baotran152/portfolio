@@ -3,12 +3,9 @@ import { z } from 'zod';
 
 export const getPresentation = tool({
   description:
-    'This tool returns a concise personal introduction of Trần Nguyễn Duy Bảo. It is used to answer the question "Who are you?" or "Tell me about yourself"',
+    'A short personal introduction: who Trần Nguyễn Duy Bảo is, what he does, what he specialises in. Use for "who are you", "tell me about yourself", "introduce yourself", or as the opener when a visitor arrives with no specific question. For the employer-by-employer timeline use getBackground instead; for a downloadable CV use getResume.',
   parameters: z.object({}),
   execute: async () => {
-    return {
-      presentation:
-        "I'm Trần Nguyễn Duy Bảo, starting as an AI Engineer since 2023, with years of production experience in building and optimizing LLM systems, NLP pipelines, and multimodal AI applications. I specialize in LLM inference optimization, multi-agent orchestration, and RAG architectures using tools like vLLM, LangChain, and Dagster. I focus on solving real-world problems in healthcare and media.",
-    };
+    return "My introduction is shown above.";
   },
 });

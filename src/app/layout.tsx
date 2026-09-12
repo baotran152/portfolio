@@ -32,14 +32,14 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Trần Nguyễn Duy Bảo",
-      url: "https://baro1502.github.io",
+      url: "https://baotran152.github.io",
     },
   ],
   creator: "Trần Nguyễn Duy Bảo",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://baro1502.github.io",
+    url: "https://baotran152.github.io",
     title: "Trần Nguyễn Duy Bảo | AI Portfolio",
     description:
       "Explore the interactive portfolio of Bảo – AI engineer specializing in LLM agents, Computer Vision, and full-stack development.",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Bảo Trần | AI Engineer",
     description:
       "Discover my interactive AI portfolio, real-world projects, and experience with LLMs, CV, and ML deployment.",
-    creator: "@Baro1502", // if you don’t have Twitter, just remove this
+    creator: "@baro_1502", // if you don’t have Twitter, just remove this
   },
   icons: {
     icon: [

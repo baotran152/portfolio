@@ -3,7 +3,7 @@
 
 import { ChatRequestOptions } from 'ai';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import React, { useEffect } from 'react';
 
 interface ChatBottombarProps {
@@ -53,7 +53,7 @@ export default function ChatBottombar({
       className="w-full pb-2 md:pb-8"
     >
       <form onSubmit={handleSubmit} className="relative w-full md:px-4">
-        <div className="mx-auto flex items-center rounded-full border border-[#E5E5E9] bg-[#ECECF0] py-2 pr-2 pl-6">
+        <div className="border-border bg-muted mx-auto flex items-center rounded-full border py-2 pr-2 pl-6">
           <input
             ref={inputRef}
             type="text"
@@ -63,7 +63,7 @@ export default function ChatBottombar({
             placeholder={
               isToolInProgress ? 'Tool is in progress...' : 'Ask me anything'
             }
-            className="text-md w-full border-none bg-transparent text-black placeholder:text-gray-500 focus:outline-none"
+            className="text-md text-foreground placeholder:text-muted-foreground w-full border-none bg-transparent focus:outline-none"
             disabled={isToolInProgress || isLoading}
           />
 

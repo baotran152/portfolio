@@ -61,7 +61,7 @@ const PROJECT_CONTENT = [
     date: '2023',
     links: [
       { name: 'Dataset', url: 'https://data-flair.training/blogs/download-tata-global-beverages-stocks-data/' },
-      { name: 'GitHub', url: 'https://github.com/Baro1502/stock-price-prediction' },
+      { name: 'GitHub', url: 'https://github.com/baotran152/stock-price-prediction' },
     ],
     images: [
       { src: '/projects/stock-lstm/price-ma.png', alt: 'Moving averages' },

@@ -1,4 +1,5 @@
 // src/components/chat/tool-renderer.tsx
+import { memo } from 'react';
 import { Contact } from '../contact';
 import { Presentation } from '../presentation';
 import AllProjects from '../projects/AllProjects';
@@ -11,10 +12,7 @@ interface ToolRendererProps {
   messageId: string;
 }
 
-export default function ToolRenderer({
-  toolInvocations,
-  messageId,
-}: ToolRendererProps) {
+function ToolRenderer({ toolInvocations, messageId }: ToolRendererProps) {
   return (
     <div className="w-full transition-all duration-300">
       {toolInvocations.map((tool) => {
@@ -107,3 +105,15 @@ export default function ToolRenderer({
     </div>
   );
 }
+
+// A finished tool result never changes, but the streaming text that follows it gives
+// `toolInvocations` a new array identity on every token. Comparing by id and state
+// stops that cascade here, so the tool UI below is not re-rendered ~50 times a second.
+export default memo(ToolRenderer, (prev, next) => {
+  if (prev.messageId !== next.messageId) return false;
+  if (prev.toolInvocations.length !== next.toolInvocations.length) return false;
+  return prev.toolInvocations.every((tool, i) => {
+    const other = next.toolInvocations[i];
+    return tool.toolCallId === other.toolCallId && tool.state === other.state;
+  });
+});

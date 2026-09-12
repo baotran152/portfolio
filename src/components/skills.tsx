@@ -3,102 +3,121 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { Code, Cpu, Database, PenTool, Users } from 'lucide-react';
+import { Cpu, Database, Star, Users } from 'lucide-react';
+
+// Every skill is the same shape; add `featured: true` to give one the glowing ring.
+type Skill = { name: string; featured?: boolean };
+
+type SkillSection = {
+  category: string;
+  icon: React.ReactNode;
+  skills: Skill[];
+  color: string;
+};
+
+const skillsData: SkillSection[] = [
+  {
+    category: 'AI & Machine Learning',
+    icon: <Cpu className="h-5 w-5" />,
+    skills: [
+      { name: 'RAG & Vector Search', featured: true },
+      { name: 'Multi-Agent Systems', featured: true },
+      { name: 'Prompt Engineering' },
+      { name: 'Fine-tuning (LoRA, PEFT, Distillation)', featured: true },
+      { name: 'ASR' },
+      { name: 'Computer Vision & OCR' },
+      { name: 'Classical ML & DL (Boosting, CNN, LSTM, GANs)' },
+    ],
+    color:
+      'bg-indigo-800/75 text-indigo-50 border-indigo-900/30 dark:bg-indigo-400/10 dark:text-indigo-100 dark:border-indigo-400/25',
+  },
+  {
+    category: 'Backend & Systems',
+    icon: <Database className="h-5 w-5" />,
+    skills: [
+      { name: 'Python', featured: true },
+      { name: 'SQL' },
+      { name: 'JavaScript' },
+      { name: 'FastAPI', featured: true },
+      { name: 'Flask' },
+      { name: 'Node.js' },
+      { name: 'Message Queue (Kafka & RabbitMQ)' },
+      { name: 'PostgreSQL' },
+      { name: 'MongoDB' },
+      { name: 'Vector Databases (Pinecone, Chroma, Qdrant)' },
+    ],
+    color:
+      'bg-teal-900/75 text-teal-50 border-teal-950/30 dark:bg-teal-400/10 dark:text-teal-100 dark:border-teal-400/25',
+  },
+  {
+    category: 'Data & Infra',
+    icon: <Cpu className="h-5 w-5" />,
+    skills: [
+      { name: 'Pandas & NumPy' },
+      { name: 'Dagster & PySpark', featured: true  },
+      { name: 'SpaCy' },
+      { name: 'Docker' },
+      { name: 'GCP & AWS' },
+      { name: 'NVIDIA H100 GPU Clusters' },
+      { name: 'Model Deployment', featured: true },
+    ],
+    color:
+      'bg-amber-900/75 text-amber-50 border-amber-950/30 dark:bg-amber-400/10 dark:text-amber-100 dark:border-amber-400/25',
+  },
+  {
+    category: 'Soft Skills',
+    icon: <Users className="h-5 w-5" />,
+    skills: [
+      { name: 'Problem Solving', featured: true },
+      { name: 'System Design', featured: true },
+      { name: 'Research Mindset' },
+      { name: 'Documentation' },
+      { name: 'Team Collaboration', featured: true },
+      { name: 'Adaptability', featured: true },
+      { name: 'Critical Thinking', featured: true },
+    ],
+    color:
+      'bg-rose-800/75 text-rose-50 border-rose-900/30 dark:bg-rose-400/10 dark:text-rose-100 dark:border-rose-400/25',
+  },
+];
+
+// The gradient sits on a wrapper so it reads as a glowing ring while the label
+// itself stays on a solid background at full contrast.
+const FEATURED_RING =
+  'inline-block rounded-md bg-gradient-to-r from-fuchsia-500/50 via-amber-400/50 to-cyan-400/50 p-[3px] shadow-[0_0_8px_-3px_rgba(217,70,239,0.3)]';
+
+const FEATURED_BADGE =
+  'bg-neutral-800 text-neutral-50 rounded-[calc(0.375rem-2px)] border-none px-3 py-1.5 font-semibold dark:bg-neutral-300 dark:text-neutral-900';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.19, 1, 0.22, 1] },
+  },
+};
+
+const badgeVariants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.3, ease: 'easeOut' },
+  },
+};
 
 const Skills = () => {
-  const skillsData = [
-    {
-      category: 'AI & Machine Learning',
-      icon: <Cpu className="h-5 w-5" />,
-      skills: [
-        'LLMs (vLLM, Ollama, API)',
-        'RAG & Vector Search',
-        'LangChain & LangGraph',
-        'Multi-Agent Systems (Camel-AI)',
-        'Prompt Engineering',
-        'Hugging Face Transformers',
-        'Fine-tuning (PhoBERT, YOLOv8)',
-        'Whisper ASR',
-        'Computer Vision & OCR',
-        'XGBoost & Scikit-learn',
-      ],
-      color: 'bg-purple-50 text-purple-600 border border-purple-200',
-    },
-    {
-      category: 'Backend & Systems',
-      icon: <Database className="h-5 w-5" />,
-      skills: [
-        'Python',
-        'SQL',
-        'JavaScript',
-        'FastAPI',
-        'Flask',
-        'Node.js',
-        'Kafka & RabbitMQ',
-        'PostgreSQL',
-        'MongoDB',
-        'Pinecone & Elassandra',
-      ],
-      color: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-    },
-    {
-      category: 'Data & Infra',
-      icon: <Cpu className="h-5 w-5" />,
-      skills: [
-        'Pandas & NumPy',
-        'Dagster & PySpark',
-        'SpaCy',
-        'Docker',
-        'GCP & AWS',
-        'NVIDIA H100 GPU Clusters',
-        'Model Deployment',
-      ],
-      color: 'bg-yellow-50 text-yellow-600 border border-yellow-200',
-    },
-    {
-      category: 'Soft Skills',
-      icon: <Users className="h-5 w-5" />,
-      skills: [
-        'Problem Solving',
-        'System Design',
-        'Research Mindset',
-        'Documentation',
-        'Team Collaboration',
-        'Adaptability',
-        'Critical Thinking',
-      ],
-      color: 'bg-amber-50 text-amber-600 border border-amber-200',
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: [0.19, 1, 0.22, 1] },
-    },
-  };
-
-  const badgeVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.3, ease: 'easeOut' },
-    },
-  };
-
   return (
     <motion.div
       initial={{ scale: 0.98, opacity: 0 }}
@@ -120,9 +139,9 @@ const Skills = () => {
             initial="hidden"
             animate="visible"
           >
-            {skillsData.map((section, index) => (
+            {skillsData.map((section) => (
               <motion.div
-                key={index}
+                key={section.category}
                 className="space-y-3 px-0"
                 variants={itemVariants}
               >
@@ -139,18 +158,34 @@ const Skills = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  {section.skills.map((skill, idx) => (
+                  {section.skills.map(({ name, featured }) => (
                     <motion.div
-                      key={idx}
+                      key={name}
                       variants={badgeVariants}
                       whileHover={{
                         scale: 1.04,
                         transition: { duration: 0.2 },
                       }}
                     >
-                      <Badge className={`border px-3 py-1.5 font-normal`}>
-                        {skill}
-                      </Badge>
+                      {featured ? (
+                        <span className={FEATURED_RING}>
+                          <Badge className={FEATURED_BADGE}>
+                            <Star
+                              className="fill-amber-400/70 text-amber-400/70"
+                              aria-hidden="true"
+                            />
+                            {/* Without this the star conveys meaning visually only. */}
+                            <span className="sr-only">Core strength: </span>
+                            {name}
+                          </Badge>
+                        </span>
+                      ) : (
+                        <Badge
+                          className={`border px-3 py-1.5 font-normal ${section.color}`}
+                        >
+                          {name}
+                        </Badge>
+                      )}
                     </motion.div>
                   ))}
                 </motion.div>
