@@ -46,17 +46,21 @@ Want to run this project locally? Here's what you need:
    cp .env.example .env
    ```
 
-   Pick a provider with `AI_PROVIDER` (`google`, `openai` or `openrouter`) and set
-   only that provider's key. Leaving `AI_PROVIDER` empty auto-detects the first
-   provider that has a key, checked in the order google, openai, openrouter.
+   Pick a preferred provider with `AI_PROVIDER` (`google`, `openai` or `openrouter`).
+   Any other provider you also give a key to becomes an automatic fallback: if the
+   preferred one is rate limited or failing, the chat quietly retries the next one,
+   so a free-tier daily limit does not take the chat down. Leaving `AI_PROVIDER`
+   empty auto-detects the first provider that has a key.
 
    ```env
    AI_PROVIDER=google
    GOOGLE_GENERATIVE_AI_API_KEY=your_google_api_key_here
    ```
 
-   `AI_MODEL` optionally overrides the model. The defaults are `gemini-2.5-flash`
-   for google, `gpt-4o-mini` for openai and `openrouter/free` for openrouter.
+   `AI_MODEL` optionally overrides the model for the preferred provider. Fallback
+   providers always use their own default, since model ids are provider-specific.
+   The defaults are `gemini-2.5-flash` for google, `gpt-4o-mini` for openai and
+   `openrouter/free` for openrouter.
 
    `OPEN_TO_WORK` controls the availability banner on the homepage: `true` shows
    "I am OPEN for new opportunity", `false` shows "Currently NOT open". It is read

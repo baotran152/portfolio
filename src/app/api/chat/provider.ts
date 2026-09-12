@@ -1,5 +1,6 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
+import { APICallError } from 'ai';
 import type { LanguageModelV1 } from 'ai';
 
 export type ProviderKey = 'google' | 'openai' | 'openrouter';
@@ -90,4 +91,45 @@ export function createChatModel(
 ): LanguageModelV1 {
   const { provider, model, apiKey } = resolveProvider(env);
   return BUILDERS[provider](apiKey, model);
+}
+
+export type ProviderCandidate = ResolvedProvider;
+
+// The selected provider first, then every other provider that has a key. A model
+// id is provider-specific ("openrouter/free" means nothing to Google), so AI_MODEL
+// applies only to the primary - fallbacks use their own defaults.
+export function buildProviderChain(
+  env: NodeJS.ProcessEnv = process.env,
+): ProviderCandidate[] {
+  const primary = resolveProvider(env);
+
+  const fallbacks = DETECTION_ORDER.filter(
+    (provider) => provider !== primary.provider && readApiKey(env, provider),
+  ).map((provider) => ({
+    provider,
+    model: DEFAULT_MODELS[provider],
+    apiKey: readApiKey(env, provider),
+  }));
+
+  return [primary, ...fallbacks];
+}
+
+export function createModelFor(candidate: ProviderCandidate): LanguageModelV1 {
+  return BUILDERS[candidate.provider](candidate.apiKey, candidate.model);
+}
+
+// Worth trying a different provider: quota exhausted, provider-side failure, or a
+// key that is dead here but may be fine elsewhere. A 400-class request error is not
+// included - a malformed request fails identically everywhere and would burn every
+// provider's quota in turn.
+export function shouldFallBack(error: unknown): boolean {
+  if (APICallError.isInstance(error)) {
+    const status = error.statusCode;
+    if (status === undefined) return true; // network/timeout, no response
+    if (status === 429) return true; // rate limit or quota
+    if (status === 401 || status === 403) return true; // dead or rejected key
+    return status >= 500;
+  }
+  // Anything unrecognised is most likely transport-level; another provider may work.
+  return true;
 }
