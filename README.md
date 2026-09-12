@@ -57,6 +57,11 @@ Want to run this project locally? Here's what you need:
 
    `AI_MODEL` optionally overrides the model. The defaults are `gemini-2.5-flash`
    for google, `gpt-4o-mini` for openai and `openrouter/free` for openrouter.
+
+   `NEXT_PUBLIC_OPEN_TO_WORK` controls the availability banner on the homepage:
+   `true` shows "I am OPEN for new opportunity", `false` shows "Currently NOT open".
+   Being a `NEXT_PUBLIC_` variable it is inlined at build time, so changing it needs
+   a rebuild or redeploy - but no code change.
 4. **Run the development server**
 
    ```bash

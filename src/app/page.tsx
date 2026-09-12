@@ -40,6 +40,12 @@ type StatusButtonProps = {
   isOpen: boolean;
 };
 
+// Next inlines NEXT_PUBLIC_* at build time, so this must reference the full literal key.
+// Anything other than "false" reads as open, so a typo shows the friendlier state.
+const IS_OPEN_TO_WORK =
+  (process.env.NEXT_PUBLIC_OPEN_TO_WORK ?? 'true').trim().toLowerCase() !==
+  'false';
+
 
 export default function Home() {
   function StatusButton({ isOpen }: StatusButtonProps) {
@@ -140,7 +146,7 @@ export default function Home() {
       </div>
 
       {/* OPEN FOR WORK */}
-      <StatusButton isOpen={true} />
+      <StatusButton isOpen={IS_OPEN_TO_WORK} />
 
       {/* header */}
       <motion.div
