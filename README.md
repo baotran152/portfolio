@@ -24,7 +24,7 @@ Want to run this project locally? Here's what you need:
 
 - **Node.js** (v18 or higher)
 - **pnpm** package manager
-- **Google Generative API token** (for AI chat functionality)\
+- An **API key for one AI provider** (for AI chat functionality): Google Generative AI, OpenAI, or OpenRouter
 
 ### Setup
 
@@ -40,11 +40,23 @@ Want to run this project locally? Here's what you need:
    pnpm install
    ```
 3. **Environment variables**
-   Create a `.env` file in the root directory:
+   Copy the example file and edit it:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Pick a provider with `AI_PROVIDER` (`google`, `openai` or `openrouter`) and set
+   only that provider's key. Leaving `AI_PROVIDER` empty auto-detects the first
+   provider that has a key, checked in the order google, openai, openrouter.
 
    ```env
-   GOOGLE_GENERATIVE_AI_API_KEY=your_openai_api_key_here
+   AI_PROVIDER=google
+   GOOGLE_GENERATIVE_AI_API_KEY=your_google_api_key_here
    ```
+
+   `AI_MODEL` optionally overrides the model. The defaults are `gemini-2.5-flash`
+   for google, `gpt-4o-mini` for openai and `openai/gpt-4o-mini` for openrouter.
 4. **Run the development server**
 
    ```bash
@@ -61,4 +73,6 @@ Want to run this project locally? Here's what you need:
    ```
 ### Getting your **tokens**
 
-- **GOOGLE_GENERATIVE_AI_API_KEYn**: Generate one
+- **GOOGLE_GENERATIVE_AI_API_KEY**: Generate one at https://aistudio.google.com/apikey
+- **OPENAI_API_KEY**: Generate one at https://platform.openai.com/api-keys
+- **OPENROUTER_API_KEY**: Generate one at https://openrouter.ai/keys

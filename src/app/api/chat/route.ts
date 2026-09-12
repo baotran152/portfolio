@@ -1,10 +1,5 @@
-import { createOpenAI } from "@ai-sdk/openai";
-
-const openrouter = createOpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY,
-});
 import { streamText } from 'ai';
+import { createChatModel } from './provider';
 import { SYSTEM_PROMPT } from './prompt';
 import { getContact } from './tools/getContact';
 import { getPresentation } from './tools/getPresentation';
@@ -44,8 +39,10 @@ export async function POST(req: Request) {
       getBackground
     };
 
+    // Resolved per request so a misconfigured env returns a 500 with a readable
+    // message instead of failing at module load.
     const result = streamText({
-      model: openrouter("openrouter/free"),
+      model: createChatModel(),
       messages,
       toolCallStreaming: true,
       tools,
