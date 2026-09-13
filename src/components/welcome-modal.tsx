@@ -73,7 +73,7 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="sticky top-0 right-0 cursor-pointer rounded-full bg-black p-2 text-white hover:bg-black/90 hover:text-white"
+                className="bg-foreground text-background hover:bg-foreground/90 sticky top-0 right-0 cursor-pointer rounded-full p-2"
                 onClick={() => setIsOpen(false)}
               >
                 <X className="h-6 w-6" />
@@ -103,7 +103,7 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
                   </h3>
                   <p className="text-accent-foreground text-base leading-relaxed">
                     As an AI Engineer, I believe your work should reflect your skills.
-                    This dynamic portfolio showcases my projects using large language models, retrieval-augmented generation (RAG), vector databases, and more—while letting you interact naturally.
+                    This dynamic portfolio showcases my projects using large language models, retrieval-augmented generation (RAG), tools calling, and more while letting you interact naturally.
                   </p>
                 </div>
               </section>

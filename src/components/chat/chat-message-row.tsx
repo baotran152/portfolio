@@ -23,6 +23,7 @@ const TOOL_LABELS: Record<string, string> = {
   getContact: 'Contact',
   getSkills: 'Skills',
   getBackground: 'Background',
+  getPhotos: 'Photos',
 };
 
 function firstCompletedTool(message: Message) {

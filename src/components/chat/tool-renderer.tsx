@@ -6,6 +6,8 @@ import AllProjects from '../projects/AllProjects';
 import Resume from '../resume';
 import Skills from '../skills';
 import Background from '../background';
+import { Photos } from '../photos';
+import { PHOTOS } from '@/lib/photos';
 
 interface ToolRendererProps {
   toolInvocations: any[];
@@ -58,6 +60,13 @@ function ToolRenderer({ toolInvocations, messageId }: ToolRendererProps) {
             return (
               <div key={toolCallId} className="w-full rounded-lg">
                 <Skills />
+              </div>
+            );
+
+          case 'getPhotos':
+            return (
+              <div key={toolCallId} className="w-full rounded-lg">
+                <Photos photos={PHOTOS} title="Photos" />
               </div>
             );
 

@@ -14,6 +14,7 @@ import {
   ChatBubble,
   ChatBubbleMessage,
 } from '@/components/ui/chat/chat-bubble';
+import { StatusBadge } from '@/components/status-badge';
 import { ThemeToggle } from '@/components/theme-toggle';
 import WelcomeModal from '@/components/welcome-modal';
 import { Info } from 'lucide-react';
@@ -117,7 +118,11 @@ const MOTION_CONFIG = {
   },
 };
 
-const Chat = () => {
+type ChatProps = {
+  isOpenToWork: boolean;
+};
+
+const Chat = ({ isOpenToWork }: ChatProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('query');
@@ -299,6 +304,13 @@ const Chat = () => {
 
   return (
     <div className="relative h-screen overflow-hidden">
+      {/* Above the fixed gradient header (z-50), which would otherwise wash it out.
+          Hidden on small screens, where it would collide with the controls opposite. */}
+      <StatusBadge
+        isOpen={isOpenToWork}
+        className="z-51 hidden md:flex"
+      />
+
       <div className="absolute top-6 right-8 z-51 flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
         <WelcomeModal
           trigger={

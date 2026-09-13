@@ -26,6 +26,7 @@ import {
   UserSearch,
 } from 'lucide-react';
 import { useState } from 'react';
+import { QUESTIONS, QUESTION_COLORS, QUESTION_ORDER } from '@/lib/content';
 import { Drawer } from 'vaul';
 
 interface HelperBoostProps {
@@ -33,22 +34,21 @@ interface HelperBoostProps {
   setInput?: (value: string) => void;
 }
 
-const questions = {
-  Me: 'Who are you? I want to know more about you.',
-  Projects: 'What are your projects? What are you working on right now?',
-  Skills: 'What are your skills? Give me a list of your soft and hard skills.',
-  Background: 'What is your education and working experience background?',
-  Contact:
-    'How can I reach you? What kind of project would make you say "yes" immediately?',
-};
+const QUESTION_ICONS = {
+  Me: Laugh,
+  Projects: BriefcaseBusiness,
+  Skills: Layers,
+  Background: GraduationCap,
+  Contact: UserRoundSearch,
+} as const;
 
-const questionConfig = [
-  { key: 'Me', color: '#329696', icon: Laugh },
-  { key: 'Projects', color: '#3E9858', icon: BriefcaseBusiness },
-  { key: 'Skills', color: '#856ED9', icon: Layers },
-  { key: 'Background', color: '#B95F9D', icon: GraduationCap },
-  { key: 'Contact', color: '#C19433', icon: UserRoundSearch },
-];
+const questions = QUESTIONS;
+
+const questionConfig = QUESTION_ORDER.map((key) => ({
+  key,
+  color: QUESTION_COLORS[key],
+  icon: QUESTION_ICONS[key],
+}));
 
 // Helper drawer data
 const specialQuestions = [
@@ -238,12 +238,12 @@ export default function HelperBoost({
         {/* Drawer Content */}
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 z-100 bg-black/60 backdrop-blur-xs" />
-          <Drawer.Content className="fixed right-0 bottom-0 left-0 z-100 mt-24 flex h-[80%] flex-col rounded-t-[10px] bg-gray-100 outline-none lg:h-[60%]">
+          <Drawer.Content className="bg-background fixed right-0 bottom-0 left-0 z-100 mt-24 flex h-[80%] flex-col rounded-t-[10px] outline-none lg:h-[60%]">
             <div className="bg-background flex-1 overflow-y-auto rounded-t-[10px] p-4">
               <div className="mx-auto max-w-md space-y-4">
                 <div
                   aria-hidden
-                  className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300"
+                  className="bg-muted-foreground/30 mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full"
                 />
                 <div className="mx-auto w-full max-w-md">
                   <div className="space-y-8 pb-16">
@@ -285,7 +285,7 @@ function CategorySection({
     <div className="space-y-3">
       <div className="flex items-center gap-2.5 px-1">
         <Icon className="h-5 w-5" />
-        <Drawer.Title className="text-[22px] font-medium text-gray-900">
+        <Drawer.Title className="text-foreground text-[22px] font-medium">
           {name}
         </Drawer.Title>
       </div>
@@ -329,16 +329,16 @@ function QuestionItem({ question, onClick, isSpecial }: QuestionItemProps) {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{
-        backgroundColor: isSpecial ? undefined : '#F0F0F2',
+        backgroundColor: isSpecial ? undefined : 'var(--accent)',
       }}
       whileTap={{
         scale: 0.98,
-        backgroundColor: isSpecial ? undefined : '#E8E8EA',
+        backgroundColor: isSpecial ? undefined : 'var(--border)',
       }}
     >
       <div className="flex items-center">
-        {isSpecial && <Sparkles className="mr-2 h-4 w-4 text-white" />}
-        <span className={isSpecial ? 'font-medium text-white' : ''}>
+        {isSpecial && <Sparkles className="text-background mr-2 h-4 w-4" />}
+        <span className={isSpecial ? 'text-background font-medium' : 'text-foreground'}>
           {question}
         </span>
       </div>
@@ -353,7 +353,7 @@ function QuestionItem({ question, onClick, isSpecial }: QuestionItemProps) {
         <ChevronRight
           className={cn(
             'h-5 w-5 shrink-0',
-            isSpecial ? 'text-white' : 'text-primary'
+            isSpecial ? 'text-background' : 'text-primary'
           )}
         />
       </motion.div>

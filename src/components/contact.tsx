@@ -13,7 +13,7 @@ export function Contact() {
     socials: [
       {
         name: 'LinkedIn',
-        url: 'https://www.linkedin.com/in/bao-tran-nguyen-duy',
+        url: 'https://www.linkedin.com/in/bao-tnd',
       },
       {
         name: 'GitHub',
@@ -21,7 +21,7 @@ export function Contact() {
       },
       {
         name: 'CV',
-        url: 'CV -- Trần Nguyễn Duy Bảo - AI Engineer.pdf',
+        url: '/resume.pdf',
       },
     ],
   };

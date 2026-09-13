@@ -9,8 +9,8 @@ export function Resume() {
     title: "Tran Nguyen Duy Bao's Resume",
     description: 'AI Engineer • Machine Learning Specialist',
     fileType: 'PDF',
-    lastUpdated: 'July 2025',
-    fileSize: '1.1 MB',
+    lastUpdated: 'September 2026',
+    fileSize: '131 KB',
     viewUrl: '/resume.pdf', // Make sure this file is public or in /public folder
   };
 
@@ -49,7 +49,7 @@ export function Resume() {
 
             {/* View icon */}
             <motion.div
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-primary-foreground group-hover:bg-black/80"
+              className="bg-foreground text-background group-hover:bg-foreground/80 flex h-10 w-10 items-center justify-center rounded-full"
               initial={{ scale: 1 }}
             >
               <Eye className="h-5 w-5" />

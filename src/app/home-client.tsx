@@ -3,7 +3,9 @@
 import FluidCursor from '@/components/FluidCursor';
 import { Button } from '@/components/ui/button';
 import { GithubButton } from '@/components/ui/github-button';
+import { StatusBadge } from '@/components/status-badge';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { QUESTIONS, QUESTION_COLORS, QUESTION_ORDER } from '@/lib/content';
 import WelcomeModal from '@/components/welcome-modal';
 import { motion } from 'framer-motion';
 import {
@@ -19,63 +21,27 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 /* ---------- quick-question data ---------- */
-const questions = {
-  Me: 'Who are you? I want to know more about you.',
-  Projects: 'What are your projects? What are you working on right now?',
-  Skills: 'What are your skills? Give me a list of your soft and hard skills.',
-  Background: 'What is your education and working experience background?',
-  Contact: 'How can I contact you?',
+const QUESTION_ICONS = {
+  Me: Laugh,
+  Projects: BriefcaseBusiness,
+  Skills: Layers,
+  Background: GraduationCap,
+  Contact: UserRoundSearch,
 } as const;
 
-const questionConfig = [
-  { key: 'Me', color: '#329696', icon: Laugh },
-  { key: 'Projects', color: '#3E9858', icon: BriefcaseBusiness },
-  { key: 'Skills', color: '#856ED9', icon: Layers },
-  { key: 'Background', color: '#B95F9D', icon: GraduationCap },
-  { key: 'Contact', color: '#C19433', icon: UserRoundSearch },
-] as const;
+const questionConfig = QUESTION_ORDER.map((key) => ({
+  key,
+  color: QUESTION_COLORS[key],
+  icon: QUESTION_ICONS[key],
+}));
 
 /* ---------- component ---------- */
-
-type StatusButtonProps = {
-  isOpen: boolean;
-};
 
 type HomeProps = {
   isOpenToWork: boolean;
 };
 
 export default function Home({ isOpenToWork }: HomeProps) {
-  function StatusButton({ isOpen }: StatusButtonProps) {
-    return (
-      <div className="absolute top-6 left-6 z-20">
-        <button
-          className={`relative flex cursor-pointer items-center gap-2.5 rounded-full border-2 px-5 py-2.5 text-sm font-semibold shadow-lg backdrop-blur-lg transition md:text-base
-            ${isOpen
-              ? 'border-emerald-500/50 bg-emerald-50/80 text-emerald-900 hover:bg-emerald-100 dark:border-emerald-400/50 dark:bg-emerald-950/70 dark:text-emerald-50 dark:hover:bg-emerald-900/70'
-              : 'border-rose-500/50 bg-rose-50/80 text-rose-900 hover:bg-rose-100 dark:border-rose-400/50 dark:bg-rose-950/70 dark:text-rose-50 dark:hover:bg-rose-900/70'}
-          `}
-        >
-          {/* Pulse dot */}
-          <span className="relative flex h-2.5 w-2.5">
-            {isOpen ? (
-              <>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
-              </>
-            ) : (
-              <>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500"></span>
-              </>
-            )}
-          </span>
-          {isOpen ? 'I am OPEN for new opportunity' : 'Currently NOT open for new opportunity'}
-        </button>
-      </div>
-    );
-  }
-
   const [input, setInput] = useState('');
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -145,7 +111,7 @@ export default function Home({ isOpenToWork }: HomeProps) {
       </div>
 
       {/* OPEN FOR WORK */}
-      <StatusButton isOpen={isOpenToWork} />
+      <StatusBadge isOpen={isOpenToWork} />
 
       {/* header */}
       <motion.div
@@ -218,7 +184,7 @@ export default function Home({ isOpenToWork }: HomeProps) {
           {questionConfig.map(({ key, color, icon: Icon }) => (
             <Button
               key={key}
-              onClick={() => goToChat(questions[key])}
+              onClick={() => goToChat(QUESTIONS[key])}
               variant="outline"
               className="border-border hover:bg-border/30 bg-background/30 aspect-square w-full cursor-pointer rounded-2xl border py-8 shadow-none backdrop-blur-lg active:scale-95 md:p-10"
             >
